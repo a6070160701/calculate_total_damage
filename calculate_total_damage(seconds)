@@ -36,7 +36,7 @@ def calculate_total_damage(seconds):
 
 num_simulations = 1000  # 模擬次數
 total_damages = 0
-seconds = 100  # 模擬秒數
+seconds = 30  # 模擬秒數
 
 for _ in range(num_simulations):
     total_damages += calculate_total_damage(seconds)
