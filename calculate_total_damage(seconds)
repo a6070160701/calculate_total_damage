@@ -1,0 +1,46 @@
+import random
+
+def calculate_total_damage(seconds):
+    hit_rate = 0.6
+    attack = 13
+    cooldown = 1.7
+    buff_per_hit = 3
+    buff_per_miss = 4
+    crit_multiplier = 2
+
+    total_damage = 0
+    attack_time = 1.7
+    buff_stack = 0
+
+    while attack_time < seconds:
+
+        if random.random() <= hit_rate + buff_stack * 0.05:
+            total_damage += attack
+            crit_chance = buff_stack * 0.05
+            if random.random() <= crit_chance:
+                total_damage += attack * (crit_multiplier - 1)
+
+            if buff_stack >= buff_per_hit:
+                attack = attack + 2
+                buff_stack -= buff_per_hit
+                buff_stack = max(0, buff_stack)
+            else:
+                attack = attack
+
+        else:
+            buff_stack += buff_per_miss
+
+        attack_time += cooldown
+
+    return total_damage
+
+num_simulations = 1000  # 模擬次數
+total_damages = 0
+seconds = 100  # 模擬秒數
+
+for _ in range(num_simulations):
+    total_damages += calculate_total_damage(seconds)
+
+average_damage = total_damages / num_simulations
+average_damage_per_second = average_damage / seconds
+print("Average Damage per Second:", average_damage_per_second)
